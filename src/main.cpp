@@ -24,9 +24,9 @@ void readCommand(size_t argc, char argv[]) {
                Serial.print(argv[i]);
             Serial.println();
             if (argc == 6 && argv[3] == 'm') { // move
-               if (argv[4] == '0') claw.closeClaw();
+               if (argv[4] == '0') claw.openClaw();
                else {
-                  claw.openClaw();
+                  claw.closeClaw();
                   // int val = (argv[4] - '1') * 2;
                   // claw.move(-val);
                }
@@ -34,9 +34,11 @@ void readCommand(size_t argc, char argv[]) {
             break;
          case 'w': // wrist
             if (argc == 7 && argv[3] == 'm') { // move
-               float yaw = (argv[4] - '5') * 500.0;
+               float roll = (argv[4] - '5') * 500.0;
                float pitch = (argv[5] - '5') * 500.0;
-               wrist.set(yaw, pitch);
+               wrist.set(roll, pitch);
+            } else if (argc == 5 && argv[3] == 'h') { // home
+               wrist.home();
             }
             break;
          default:
@@ -53,6 +55,7 @@ void setup()
 {  
    Serial.begin(115200);
    Serial2.begin(115200);
+   wrist.set(100,0);
 }
 
 void run() {
@@ -61,7 +64,7 @@ void run() {
 
 void loop()
 {
-   reader.readSerial(&readCommand);
+   // reader.readSerial(&readCommand);
    run();
-   delay(10);
+   // delay(10);
 }

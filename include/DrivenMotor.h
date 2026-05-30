@@ -25,6 +25,7 @@ class DrivenMotor {
 
     public:
         static const DrivenMotorConfiguration DEFAULT_CONFIGS;
+        static const uint8_t HOMING_THRESHOLD;
 
         DrivenMotor(uint8_t pinSTP, uint8_t pinDIR, uint8_t address, const DrivenMotorConfiguration *configs) :
             stepper(new AccelStepper(AccelStepper::DRIVER, pinSTP, pinDIR)),
@@ -74,8 +75,11 @@ class DrivenMotor {
         void setAcceleration(float accel) {
             stepper->setAcceleration(accel);
         }
+
+        uint8_t sg_result() { return driver->SG_RESULT(); }
 };
 
 const DrivenMotorConfiguration DrivenMotor::DEFAULT_CONFIGS = DrivenMotorConfiguration(true, 3, 24, true, 4, true);
+const uint8_t DrivenMotor::HOMING_THRESHOLD = 10;
 
 #endif

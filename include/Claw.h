@@ -24,8 +24,8 @@ class Claw {
         }
 
         void move(int amt) { moveToPos(this->current_pos + amt); }
-        void openClaw() { moveToPos(this->max_pos); }
-        void closeClaw() { moveToPos(this->min_pos); }
+        void closeClaw() { moveToPos(this->max_pos); }
+        void openClaw() { moveToPos(this->min_pos); }
 };
 
 #endif
